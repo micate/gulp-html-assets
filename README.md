@@ -1,4 +1,4 @@
-# [gulp](https://github.com/wearefractal/gulp)-html-assets
+# gulp-html-assets
 
 > Find assets in HTML file, revisioning assets, rewrite references in each file.
 

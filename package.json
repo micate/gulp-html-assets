@@ -1,6 +1,6 @@
 {
   "name": "gulp-html-assets",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Find assets in HTML file, revisioning assets, rewrite references in each file",
   "main": "index.js",
   "dependencies": {
@@ -18,5 +18,16 @@
     "node": ">=0.10"
   },
   "author": "micate",
-  "license": "ISC"
+  "license": "ISC",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/micate/gulp-html-assets.git"
+  },
+  "bugs": {
+    "url": "https://github.com/micate/gulp-html-assets/issues"
+  },
+  "homepage": "https://github.com/micate/gulp-html-assets#readme"
 }
