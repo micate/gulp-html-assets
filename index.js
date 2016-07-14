@@ -84,27 +84,23 @@ function process(content, base, options) {
         // 更新索引
         options.indexes[key] = dest;
 
-        return options.prefix + options.indexes[key];
+        return options.prefix + dest;
     });
 }
 
-var ref = (function () {
-    return function (options) {
-        return through2.obj(function (file, enc, cb) {
-            if (file.isNull()) {
-                return cb(null, file)
-            }
-            if (file.isStream()) {
-                return cb(new PluginError(pkg.name, 'Streaming is not supported'))
-            }
-            if (file.isBuffer()) {
-                var contents = file.contents.toString('utf-8');
-                contents = process(contents, path.dirname(file.history), options);
-                file.contents = new Buffer(contents);
-            }
+module.exports = function (options) {
+    return through2.obj(function (file, enc, cb) {
+        if (file.isNull()) {
             return cb(null, file);
-        });
-    };
-})();
-
-module.exports = ref;
+        }
+        if (file.isStream()) {
+            return cb(new PluginError(pkg.name, 'Streaming is not supported'));
+        }
+        if (file.isBuffer()) {
+            var contents = file.contents.toString('utf-8');
+            contents = process(contents, path.dirname(file.history), options);
+            file.contents = new Buffer(contents);
+        }
+        return cb(null, file);
+    });
+};
