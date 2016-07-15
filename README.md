@@ -131,7 +131,7 @@ Output with CDN:
 <script src="http://c.d.n/assets/build/index.entry.js"></script>
 ```
 
-### template
+#### template
 Type: `String`<br />
 
 HTML reference template, it's useful when work with backend templates.
@@ -165,7 +165,7 @@ Type: `Object{}`<br/>
 
 Assets source and target map references.<br />
 
-### exts
+#### exts
 Type: `Object`<br />
 
 Convert exts from source to target, references will be effected.
