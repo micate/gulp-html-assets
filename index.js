@@ -13,6 +13,14 @@ function randomIdent() {
     return "xxxHTMLLINKxxx" + Math.random() + Math.random() + "xxx";
 }
 
+function renderURI(options, key) {
+    var uri = options.indexes[key];
+    if (options.template) {
+        return options.template.replace('[key]', key).replace('[uri]', uri);
+    }
+    return options.prefix + uri;
+}
+
 function process(content, base, options) {
     var attributes = ["img:src", "link:href", "script:src"];
     var links = attrParse(content, function (tag, attr) {
@@ -52,24 +60,34 @@ function process(content, base, options) {
         }
 
         var src = path.resolve(path.join(base, data[match]));
-        var key = path.relative(options.root, src);
+        var keyRaw = path.relative(options.root, src), keyNew = keyRaw;
+        var extRaw = path.extname(keyRaw), extNew = extRaw;
 
-        // 索引已存在, 表示已经处理过
-        if (key in options.indexes) {
-            return options.prefix + options.indexes[key];
+        if (options.exts && extRaw in options.exts) {
+            extNew = options.exts[extRaw];
+            keyNew = keyRaw.replace(new RegExp(extRaw + '$', 'g'), extNew);
         }
 
-        var dest = path.join(path.dirname(key), (options.file || key));
+        // 索引已存在, 表示已经处理过
+        if (keyRaw in options.indexes) {
+            options.indexes[keyNew] = options.indexes[keyRaw];
+            return renderURI(options, keyRaw);
+        }
+        if (keyNew in options.indexes) {
+            return renderURI(options, keyNew);
+        }
+
+        var dest = path.join(path.dirname(keyNew), options.file || path.basename(keyNew));
 
         // 替换后缀
-        var ext = path.extname(key);
-        if (ext != '') {
-            dest = dest.replace('[ext]', ext.substr(1));
+
+        if (extNew != '') {
+            dest = dest.replace('[ext]', extNew.substr(1));
         }
 
         // 替换文件名
-        var basename = path.basename(key);
-        basename = basename.substring(0, basename.lastIndexOf(ext));
+        var basename = path.basename(keyNew);
+        basename = basename.substring(0, basename.lastIndexOf(extNew));
         dest = dest.replace('[name]', basename);
 
         // 替换 hash
@@ -82,9 +100,9 @@ function process(content, base, options) {
         fsPath.copySync(src, options.dest + '/' + dest);
 
         // 更新索引
-        options.indexes[key] = dest;
+        options.indexes[keyNew] = dest;
 
-        return options.prefix + dest;
+        return renderURI(options, keyNew);
     });
 }
 
