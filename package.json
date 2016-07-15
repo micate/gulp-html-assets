@@ -1,6 +1,6 @@
 {
   "name": "gulp-html-assets",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Find assets in HTML file, revisioning assets, rewrite references in each file",
   "main": "index.js",
   "dependencies": {
