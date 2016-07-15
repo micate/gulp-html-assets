@@ -80,17 +80,18 @@ Output manifest file:
 
 #### root
 Type: `String`<br/>
+
 Set the assets root path<br/>
 
 #### dest
 Type: `String`<br/>
+
 Set the assets target path<br />
 
 #### file
 Type: `String`<br/>
-Set the assets target file name.<br />
 
-Support `[name]`, `[hash]`, `[ext]` placeholder.<br />
+Set the assets target file name, support `[name]`, `[hash]`, `[ext]` placeholder.<br />
 
 Example:
 
@@ -112,27 +113,84 @@ file: '[name]' + (DEBUG ? '' : '-[hash]') + '.[ext]'
 
 #### prefix
 Type: `String`<br/>
+
 Set the assets references prefix in HTML.<br />
 
-From
-
+HTML:
 ```html
 <script src="./index.entry.js"></script>
 ```
 
-To
-
+Output:
 ```html
 <script src="/assets/build/index.entry.js"></script>
 ```
 
-With CDN
-
+Output with CDN:
 ```html
 <script src="http://c.d.n/assets/build/index.entry.js"></script>
 ```
 
+### template
+Type: `String`<br />
+
+HTML reference template, it's useful when work with backend templates.
+
+Support `[key]` and `[uri]` placeholder, 
+`[key]` is the `indexes` key, `[value]` is the `indexes` value, `[uri]` is the full uri.
+
+Config:
+```js
+{
+    template: "{{ assets \"[key]\" }}"
+}
+```
+
+HTML:
+```html
+<div>
+<link rel="stylesheet" href="./index.entry.scss">
+</div>
+```
+
+Output:
+```html
+<div>
+<link rel="stylesheet" href="{{ assets "index.entry.css" }}">
+</div>
+```
+
 #### indexes
 Type: `Object{}`<br/>
+
 Assets source and target map references.<br />
 
+### exts
+Type: `Object`<br />
+
+Convert exts from source to target, references will be effected.
+
+Config:
+```js
+{
+    prefix: "/assets/build/",
+    exts: {
+        '.ts': '.js',
+        '.scss': '.js'
+    }
+}
+```
+
+HTML:
+```html
+<div>
+<link rel="stylesheet" href="./index.entry.scss">
+</div>
+```
+
+Output:
+```html
+<div>
+<link rel="stylesheet" href="/assets/build/index.entry.css">
+</div>
+```

@@ -14,11 +14,15 @@ function randomIdent() {
 }
 
 function renderURI(options, key) {
-    var uri = options.indexes[key];
+    var value = options.indexes[key];
+    var uri = options.prefix + value;
     if (options.template) {
-        return options.template.replace('[key]', key).replace('[uri]', uri);
+        return options.template
+            .replace('[key]', key)
+            .replace('[value]', value)
+            .replace('[uri]', uri);
     }
-    return options.prefix + uri;
+    return uri;
 }
 
 function process(content, base, options) {
