@@ -136,7 +136,7 @@ Type: `String`<br />
 
 HTML reference template, it's useful when work with backend templates.
 
-Support `[key]` and `[uri]` placeholder, 
+Support `[key]`, `[value]` and `[uri]` placeholder, 
 `[key]` is the `indexes` key, `[value]` is the `indexes` value, `[uri]` is the full uri.
 
 Config:
@@ -149,7 +149,7 @@ Config:
 HTML:
 ```html
 <div>
-<link rel="stylesheet" href="./index.entry.scss">
+<link rel="stylesheet" href="./index.entry.css">
 </div>
 ```
 
