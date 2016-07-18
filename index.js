@@ -84,9 +84,8 @@ function process(content, base, options) {
         var dest = path.join(path.dirname(keyNew), options.file || path.basename(keyNew));
 
         // 替换后缀
-
-        if (extNew != '') {
-            dest = dest.replace('[ext]', extNew.substr(1));
+        if (options.file && options.file.indexOf('[ext]') > -1) {
+            dest = dest.replace('[ext]', extNew == '' ? '' : extNew.substr(1));
         }
 
         // 替换文件名
@@ -95,7 +94,7 @@ function process(content, base, options) {
         dest = dest.replace('[name]', basename);
 
         // 替换 hash
-        if (options.file.indexOf('[hash]') > -1) {
+        if (options.file && options.file.indexOf('[hash]') > -1) {
             dest = dest.replace('[hash]', loaderUtils.getHashDigest(fs.readFileSync(src)));
         }
 
@@ -123,6 +122,7 @@ module.exports = function (options) {
             contents = process(contents, path.dirname(file.history), options);
             file.contents = new Buffer(contents);
         }
+        this.push(file);
         return cb(null, file);
     });
 };
