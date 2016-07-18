@@ -7,6 +7,7 @@ var url = require('url');
 var path = require('path');
 var fs = require('fs');
 var fsPath = require('fs-path');
+var util = require('util');
 var pkg = require('./package.json');
 
 function randomIdent() {
@@ -119,7 +120,8 @@ module.exports = function (options) {
         }
         if (file.isBuffer()) {
             var contents = file.contents.toString('utf-8');
-            contents = process(contents, path.dirname(file.history), options);
+            var filename = util.isArray(file.history) ? file.history[0] : file.history;
+            contents = process(contents, path.dirname(filename), options);
             file.contents = new Buffer(contents);
         }
         this.push(file);
