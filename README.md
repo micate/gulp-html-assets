@@ -1,5 +1,7 @@
 # gulp-html-assets
 
+[![NPM](https://nodei.co/npm/gulp-html-assets.png)](https://www.npmjs.com/package/gulp-html-assets)
+
 > Find assets in HTML file, revisioning assets, rewrite references in each file.
 
 ## Install
