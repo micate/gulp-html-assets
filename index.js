@@ -104,6 +104,7 @@ function process(content, base, options) {
         fsPath.copySync(src, options.dest + '/' + dest);
 
         // 更新索引
+        options.indexes[keyRaw] = dest;
         options.indexes[keyNew] = dest;
 
         return renderURI(options, keyNew);
