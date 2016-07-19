@@ -65,8 +65,10 @@ function process(content, base, options) {
         }
 
         var src = path.resolve(path.join(base, data[match]));
-        var keyRaw = path.relative(options.root, src), keyNew = keyRaw;
-        var extRaw = path.extname(keyRaw), extNew = extRaw;
+        var keyRaw = path.relative(options.root, src).replace('\\', '/');
+        var keyNew = keyRaw;
+        var extRaw = path.extname(keyRaw);
+        var extNew = extRaw;
 
         if (options.exts && extRaw in options.exts) {
             extNew = options.exts[extRaw];
