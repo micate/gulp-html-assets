@@ -15,7 +15,7 @@ function randomIdent() {
 }
 
 function fixURI(input) {
-    return (input || '').replace('\\', '/');
+    return (input || '').replace(/\\/g, '/');
 }
 
 function renderURI(options, key) {
