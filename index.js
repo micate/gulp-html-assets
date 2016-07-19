@@ -14,6 +14,10 @@ function randomIdent() {
     return "xxxHTMLLINKxxx" + Math.random() + Math.random() + "xxx";
 }
 
+function fixURI(input) {
+    return (input || '').replace('\\', '/');
+}
+
 function renderURI(options, key) {
     var value = options.indexes[key];
     var uri = options.prefix + value;
@@ -65,7 +69,7 @@ function process(content, base, options) {
         }
 
         var src = path.resolve(path.join(base, data[match]));
-        var keyRaw = path.relative(options.root, src).replace('\\', '/');
+        var keyRaw = fixURI(path.relative(options.root, src));
         var keyNew = keyRaw;
         var extRaw = path.extname(keyRaw);
         var extNew = extRaw;
@@ -106,6 +110,7 @@ function process(content, base, options) {
         fsPath.copySync(src, options.dest + '/' + dest);
 
         // 更新索引
+        dest = fixURI(dest);
         options.indexes[keyRaw] = dest;
         options.indexes[keyNew] = dest;
 
