@@ -131,8 +131,7 @@ module.exports = function (options) {
             var filename = util.isArray(file.history) ? file.history[0] : file.history;
             contents = process(contents, path.dirname(filename), options);
             file.contents = new Buffer(contents);
+            return cb(null, file);
         }
-        this.push(file);
-        return cb(null, file);
     });
 };
